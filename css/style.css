@@ -102,3 +102,7 @@ body {
 #alertRow {
   justify-content: center;
 }
+
+#stopButton {
+  width: 70px;
+}

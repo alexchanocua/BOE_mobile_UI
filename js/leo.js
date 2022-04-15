@@ -17,6 +17,8 @@ var startIntervalID;
 var sidPub;
 var sidVal = null;
 var sidIntervalID;
+var linear_speed = 0.1;
+var angular_speed = 0.2;
 
 var max_linear_speed = 0.5;
 var max_angular_speed = 1.2;
@@ -165,13 +167,14 @@ function initSliders() {
     });
 }
 
+// joystick no longer being used
 function createJoystick() {
 
     joystickContainer = document.getElementById('joystick');
 
     manager = nipplejs.create({
         zone: joystickContainer,
-        position: { left: 55 + '%', top: 10 + '%' },
+        position: { left: 65 + '%', top: 50 + '%' },
         mode: 'static',
         size: 400,
         color: '#ffffff',
@@ -191,6 +194,31 @@ function createJoystick() {
         twist.linear.x = 0
         twist.angular.z = 0
     });
+}
+
+function stopMove(){
+    twist.linear.x = 0
+    twist.angular.z = 0
+}
+
+function moveF(){
+    stopMove()
+    twist.linear.x = linear_speed
+}
+
+function moveB(){
+    stopMove()
+    twist.linear.x = -linear_speed
+}
+
+function moveL(){
+    stopMove()
+    twist.angular.z = angular_speed 
+}
+
+function moveR(){
+    stopMove()
+    twist.angular.z = -angular_speed 
 }
 
 function initTeleopKeyboard() {
@@ -228,7 +256,7 @@ function batteryCallback(message) {
 }
 
 function roverDataCounterCallback(message) {
-    document.getElementById('roverDataCounterID').innerHTML = `Rover Data: ${message.data}`;
+    document.getElementById('roverDataCounterID').innerHTML = 'Rover Data: ' + message.data;
 }
 
 function publishTwist() {
